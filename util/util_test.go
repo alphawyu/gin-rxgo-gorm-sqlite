@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var _ = Describe("Testing End Points", Ordered, func() {
+var _ = Describe("Testing Utils", Ordered, func() {
 	Context("FormatTimestamp", func() {
 		DescribeTable("testing ...",
 			func(in gorm.Model, oExpect string) {
