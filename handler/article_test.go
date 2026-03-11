@@ -311,7 +311,7 @@ var _ = Describe("Testing End Points", func() {
 				},
 				Entry("should return StatusOK, if delete article successfully",
 					func() {
-						mockArticleRepo.EXPECT().DeleteArticle(gomock.Cond(func(arg any) bool {
+						mockArticleRepo.EXPECT().Delete(gomock.Cond(func(arg any) bool {
 							val := arg.(*repository.ArticleModel)
 							return val.Slug == slug.Make("s0")
 						})).Return(nil).Times(1)
@@ -322,7 +322,7 @@ var _ = Describe("Testing End Points", func() {
 					}`),
 				Entry("should return StatusNotFound, when article cannot be found by slug",
 					func() {
-						mockArticleRepo.EXPECT().DeleteArticle(gomock.Any()).
+						mockArticleRepo.EXPECT().Delete(gomock.Any()).
 							Return(errors.New("some error")).Times(1)
 					},
 					http.StatusNotFound,
@@ -880,9 +880,9 @@ var _ = Describe("Testing End Points", func() {
 				Entry("should return StatusOK, if delete comment successfully",
 					func() {
 						gCtx.AddParam("id", "12")
-						mockArticleRepo.EXPECT().DeleteComment(gomock.Cond(func(arg any) bool {
-							val := arg.([]uint)
-							return val[0] == uint(12)
+						mockArticleRepo.EXPECT().Delete(gomock.Cond(func(arg any) bool {
+							val := arg.(*repository.CommentModel)
+							return val.ID == uint(12)
 						})).Return(nil).Times(1)
 					},
 					http.StatusOK,
@@ -898,7 +898,7 @@ var _ = Describe("Testing End Points", func() {
 				Entry("should return StatusNotFound, when cannot find comment by id",
 					func() {
 						gCtx.AddParam("id", "12")
-						mockArticleRepo.EXPECT().DeleteComment(gomock.Any()).
+						mockArticleRepo.EXPECT().Delete(gomock.Any()).
 							Return(errors.New("some error")).Times(1)
 					},
 					http.StatusNotFound,

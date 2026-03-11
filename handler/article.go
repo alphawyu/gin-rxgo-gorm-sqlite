@@ -11,6 +11,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gosimple/slug"
+	"gorm.io/gorm"
 )
 
 //go:generate mockgen -destination mock/article_mock.go -source article_handler.go ArticleHandler
@@ -176,7 +177,7 @@ func (a *ArticleHandlerImpl) ArticleUpdate(c *gin.Context) {
 
 func (a *ArticleHandlerImpl) ArticleDelete(c *gin.Context) {
 	slug := c.Param("slug")
-	err := a.ArticleRepo.DeleteArticle(&repository.ArticleModel{Slug: slug})
+	err := a.ArticleRepo.Delete(&repository.ArticleModel{Slug: slug})
 	if err != nil {
 		c.JSON(http.StatusNotFound, util.NewError("articles", errors.New("invalid slug")))
 		return
@@ -265,7 +266,7 @@ func (a *ArticleHandlerImpl) ArticleCommentDelete(c *gin.Context) {
 		c.JSON(http.StatusNotFound, util.NewError("comment", errors.New("invalid id")))
 		return
 	}
-	err = a.ArticleRepo.DeleteComment([]uint{id})
+	err = a.ArticleRepo.Delete(&repository.CommentModel{Model: gorm.Model{ID: id}})
 	if err != nil {
 		c.JSON(http.StatusNotFound, util.NewError("comment", errors.New("invalid id")))
 		return

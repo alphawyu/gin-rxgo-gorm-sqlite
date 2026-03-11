@@ -40,32 +40,18 @@ func (m *MockArticleRepository) EXPECT() *MockArticleRepositoryMockRecorder {
 	return m.recorder
 }
 
-// DeleteArticle mocks base method.
-func (m *MockArticleRepository) DeleteArticle(condition any) error {
+// Delete mocks base method.
+func (m *MockArticleRepository) Delete(condition any) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteArticle", condition)
+	ret := m.ctrl.Call(m, "Delete", condition)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// DeleteArticle indicates an expected call of DeleteArticle.
-func (mr *MockArticleRepositoryMockRecorder) DeleteArticle(condition any) *gomock.Call {
+// Delete indicates an expected call of Delete.
+func (mr *MockArticleRepositoryMockRecorder) Delete(condition any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteArticle", reflect.TypeOf((*MockArticleRepository)(nil).DeleteArticle), condition)
-}
-
-// DeleteComment mocks base method.
-func (m *MockArticleRepository) DeleteComment(condition any) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteComment", condition)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// DeleteComment indicates an expected call of DeleteComment.
-func (mr *MockArticleRepositoryMockRecorder) DeleteComment(condition any) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteComment", reflect.TypeOf((*MockArticleRepository)(nil).DeleteComment), condition)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockArticleRepository)(nil).Delete), condition)
 }
 
 // FavoriteBy mocks base method.

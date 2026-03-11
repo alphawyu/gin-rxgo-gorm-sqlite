@@ -60,7 +60,7 @@ type ArticleRepository interface {
 
 	SaveOne(data interface{}) error
 	Update(model *ArticleModel) error
-	DeleteArticle(condition interface{}) error
+	Delete(condition interface{}) error
 
 	FavoritesCount(article ArticleModel) uint
 	IsFavoriteBy(article ArticleModel, articleUser ArticleUserModel) bool
@@ -72,7 +72,6 @@ type ArticleRepository interface {
 	GetArticleFeed(self ArticleUserModel, limit, offset string) ([]ArticleModel, int, error)
 
 	GetComments(self *ArticleModel) error
-	DeleteComment(condition interface{}) error
 
 	SetTags(model *ArticleModel, tags []string) error
 	GetAllTags() ([]TagModel, error)
@@ -315,25 +314,17 @@ func (r *ArticleRepositoryImpl) SetTags(model *ArticleModel, tags []string) erro
 }
 
 func (r *ArticleRepositoryImpl) Update(model *ArticleModel) error {
-	err := r.db.Save(&model).Error
+	err := r.db.Save(model).Error
 	if err != nil {
 		log.Errorf("Update (gorm:Save) error %v", err)
 	}
 	return err
 }
 
-func (r *ArticleRepositoryImpl) DeleteArticle(condition interface{}) error {
-	err := r.db.Where(condition).Delete(&ArticleModel{}).Error
+func (r *ArticleRepositoryImpl) Delete(condition interface{}) error {
+	err := r.db.Where(condition).Delete(&condition).Error
 	if err != nil {
-		log.Errorf("DeleteArticle (gorm:Delete) error %v", err)
-	}
-	return err
-}
-
-func (r *ArticleRepositoryImpl) DeleteComment(condition interface{}) error {
-	err := r.db.Where(condition).Delete(&CommentModel{}).Error
-	if err != nil {
-		log.Errorf("DeleteComment (gorm:Delete) error %v", err)
+		log.Errorf("Delete (%T gorm:Delete) error %v", condition, err)
 	}
 	return err
 }

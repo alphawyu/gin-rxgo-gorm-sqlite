@@ -192,9 +192,9 @@ var _ = Describe("ArticleRepository", Ordered, func() {
 			It("delete comment of article#0", func() {
 				refA0 := testArticles[0]
 
-				err = repo.DeleteComment(&refA0.Comments[0])
+				err = repo.Delete(&refA0.Comments[0])
 				Expect(err).To(BeNil())
-				err = repo.DeleteComment(&refA0.Comments[4])
+				err = repo.Delete(&refA0.Comments[4])
 				Expect(err).To(BeNil())
 
 				a0 := repository.ArticleModel{Slug: refA0.Slug}
@@ -335,7 +335,7 @@ var _ = Describe("ArticleRepository", Ordered, func() {
 
 		It("delete article", func() {
 			refA1 := testArticles[1]
-			err := repo.DeleteArticle(&repository.ArticleModel{Slug: refA1.Slug})
+			err := repo.Delete(&repository.ArticleModel{Slug: refA1.Slug})
 			Expect(err).To(BeNil())
 
 			_, err = repo.FindOneArticle(&repository.ArticleModel{Slug: refA1.Slug})
